@@ -102,13 +102,13 @@ const VoiceRecorder: React.FC<VoiceRecorderProps> = ({
       
       <div className="text-center">
         <p className="font-medium">
-          {isListening ? "Listening..." : "Tap to record"}
+          {isListening ? "🎤 Listening..." : "🎤 Voice Assistant"}
         </p>
         <p className="text-sm text-muted-foreground">
-          Say: "Customer name and liters"
+          "Customer name liters" or "Customer paid amount"
         </p>
         <p className="text-xs text-muted-foreground">
-          Example: "Ravi 3 liters"
+          Examples: "Ravi 3" or "Ravi paid 240"
         </p>
       </div>
 
