@@ -56,13 +56,15 @@ const Index = () => {
   const totalPaid = payments.reduce((sum, payment) => sum + payment.amount, 0);
 
   const parseVoiceInput = (transcript: string) => {
-    const text = transcript.toLowerCase().trim();
+    const text = transcript.trim();
     
-    // Check if it's a payment command: "name paid amount"
-    const paidMatch = text.match(/(.+?)\s+paid\s+(\d+(?:\.\d+)?)/i);
+    // Support multiple languages - check for payment keywords in English and Telugu
+    const paidKeywords = ['paid', 'payment', 'చెల్లించాడు', 'చెల్లించింది', 'ఇచ్చాడు', 'ఇచ్చింది'];
+    const paidPattern = new RegExp(`(.+?)\\s+(${paidKeywords.join('|')})\\s+(\\d+(?:\\.\\d+)?)`, 'i');
+    const paidMatch = text.match(paidPattern);
     if (paidMatch) {
       const customerName = paidMatch[1].trim();
-      const paidAmount = parseFloat(paidMatch[2]);
+      const paidAmount = parseFloat(paidMatch[3]);
       
       const newPayment: PaymentRecord = {
         id: Date.now().toString(),
@@ -80,8 +82,10 @@ const Index = () => {
       return;
     }
     
-    // Regular sale: "name liters"
-    const numberMatch = text.match(/(.+?)\s+(\d+(?:\.\d+)?)\s*(?:liter|litre|l|$)/i);
+    // Regular sale: support English and Telugu
+    const literKeywords = ['liter', 'litre', 'l', 'లీటర్', 'లీటరు', 'లిటర్'];
+    const salePattern = new RegExp(`(.+?)\\s+(\\d+(?:\\.\\d+)?)\\s*(?:${literKeywords.join('|')}|$)`, 'i');
+    const numberMatch = text.match(salePattern);
     if (numberMatch) {
       const customerName = numberMatch[1].trim();
       const liters = parseFloat(numberMatch[2]);
@@ -104,7 +108,7 @@ const Index = () => {
     } else {
       toast({
         title: "Please try again",
-        description: "Say 'customer name liters' or 'customer name paid amount'",
+        description: "Say customer name and liters (English/Telugu supported)",
         variant: "destructive",
       });
     }
@@ -144,7 +148,7 @@ const Index = () => {
                   <TrendingUp className="w-4 h-4" />
                   <p className="text-xs font-medium">Total Revenue</p>
                 </div>
-                <p className="text-lg font-bold text-success">₹{totalRevenue}</p>
+                <p className="text-lg font-bold text-primary-foreground">₹{totalRevenue}</p>
               </CardContent>
             </Card>
             <Card className="bg-white/10 border-white/20">
@@ -189,7 +193,7 @@ const Index = () => {
           <TabsList className="grid w-full grid-cols-3 mb-6">
             <TabsTrigger value="transactions" className="flex items-center gap-2">
               <Calendar className="w-4 h-4" />
-              Transactions
+              Sales
             </TabsTrigger>
             <TabsTrigger value="customers" className="flex items-center gap-2">
               <Users className="w-4 h-4" />
@@ -206,14 +210,14 @@ const Index = () => {
               <CardHeader>
                 <CardTitle className="flex items-center gap-2">
                   <Calendar className="w-5 h-5 text-primary" />
-                  Recent Transactions
+                  Recent Sales
                 </CardTitle>
               </CardHeader>
               <CardContent>
                 {sales.length === 0 && payments.length === 0 ? (
                   <div className="text-center py-8">
                     <Milk className="w-12 h-12 text-muted-foreground mx-auto mb-3" />
-                    <p className="text-muted-foreground">No transactions yet</p>
+                    <p className="text-muted-foreground">No sales yet</p>
                     <p className="text-sm text-muted-foreground">Use voice command above to add sales or payments</p>
                   </div>
                 ) : (
@@ -242,9 +246,11 @@ const Index = () => {
                                 {transaction.type === 'sale' 
                                   ? `${(transaction as SaleRecord).liters}L milk` 
                                   : 'Payment received'
-                                } • {new Date(transaction.timestamp).toLocaleTimeString('en-IN', {
-                                  hour: '2-digit', minute: '2-digit', hour12: true
-                                })}
+                                 } • {new Date(transaction.timestamp).toLocaleDateString('en-IN', {
+                                   day: 'numeric', month: 'short', year: 'numeric'
+                                 })} {new Date(transaction.timestamp).toLocaleTimeString('en-IN', {
+                                   hour: '2-digit', minute: '2-digit', hour12: true
+                                 })}
                               </p>
                             </div>
                           </div>
@@ -293,7 +299,9 @@ const Index = () => {
                               </div>
                               <div>
                                 <p className="font-medium capitalize">{customerName}</p>
-                                <p className="text-sm text-muted-foreground">Outstanding balance</p>
+                                <p className="text-sm text-muted-foreground">
+                                  Outstanding balance • {sales.filter(s => s.customerName.toLowerCase() === customerKey).reduce((sum, s) => sum + s.liters, 0)}L total
+                                </p>
                               </div>
                             </div>
                             <div className="flex items-center gap-2">

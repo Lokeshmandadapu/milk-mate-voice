@@ -35,7 +35,7 @@ const VoiceRecorder: React.FC<VoiceRecorderProps> = ({
         const recognitionInstance = new SpeechRecognition();
         recognitionInstance.continuous = false;
         recognitionInstance.interimResults = false;
-        recognitionInstance.lang = 'en-IN'; // Indian English for better Hindi name recognition
+        recognitionInstance.lang = 'en-IN'; // Support Telugu and English
         
         recognitionInstance.onresult = (event) => {
           const transcript = event.results[0][0].transcript;
@@ -105,7 +105,7 @@ const VoiceRecorder: React.FC<VoiceRecorderProps> = ({
           {isListening ? "🎤 Listening..." : "🎤 Voice Assistant"}
         </p>
         <p className="text-sm text-muted-foreground">
-          "Customer name liters" or "Customer paid amount"
+          Telugu/English: Name + Liters or Name + Paid + Amount
         </p>
         <p className="text-xs text-muted-foreground">
           Examples: "Ravi 3" or "Ravi paid 240"
