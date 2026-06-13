@@ -1,0 +1,30 @@
+{
+  "name": "milk-mate-pro-backend",
+  "version": "0.1.0",
+  "private": true,
+  "main": "src/index.ts",
+  "scripts": {
+    "dev": "ts-node-dev --respawn --transpile-only src/index.ts",
+    "build": "tsc -p tsconfig.json",
+    "start": "node dist/src/index.js",
+    "db:init": "node scripts/init-db.js"
+  },
+  "dependencies": {
+    "bcryptjs": "^2.4.3",
+    "cors": "^2.8.5",
+    "dotenv": "^16.3.1",
+    "exceljs": "^4.4.0",
+    "express": "^4.18.2",
+    "jsonwebtoken": "^9.0.2",
+    "mysql2": "^3.6.0"
+  },
+  "devDependencies": {
+    "@types/bcryptjs": "^2.4.2",
+    "@types/cors": "^2.8.19",
+    "@types/express": "^4.17.19",
+    "@types/jsonwebtoken": "^9.0.2",
+    "@types/node": "^20.14.2",
+    "ts-node-dev": "^2.0.0",
+    "typescript": "^5.8.3"
+  }
+}

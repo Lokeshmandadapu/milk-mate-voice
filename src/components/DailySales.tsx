@@ -21,9 +21,10 @@ interface PaymentRecord {
 interface DailySalesProps {
   sales: SaleRecord[];
   payments: PaymentRecord[];
+  isCustomer?: boolean;
 }
 
-const DailySales: React.FC<DailySalesProps> = ({ sales, payments }) => {
+const DailySales: React.FC<DailySalesProps> = ({ sales, payments, isCustomer }) => {
   const today = new Date();
   const todaySales = sales.filter(sale => {
     const saleDate = new Date(sale.timestamp);
@@ -54,7 +55,7 @@ const DailySales: React.FC<DailySalesProps> = ({ sales, payments }) => {
         <CardHeader>
           <CardTitle className="flex items-center gap-2">
             <CalendarDays className="w-5 h-5 text-primary" />
-            Today's Sales Summary
+            {isCustomer ? "Today's Consumption" : "Today's Sales Summary"}
           </CardTitle>
         </CardHeader>
         <CardContent>
@@ -92,7 +93,9 @@ const DailySales: React.FC<DailySalesProps> = ({ sales, payments }) => {
             <div className="text-center py-8">
               <Milk className="w-12 h-12 text-muted-foreground mx-auto mb-3" />
               <p className="text-muted-foreground">No transactions today</p>
-              <p className="text-sm text-muted-foreground">Use voice command to add sales or payments</p>
+              <p className="text-sm text-muted-foreground">
+                {isCustomer ? 'Your record will appear once the owner updates it.' : 'Use voice command to add sales or payments.'}
+              </p>
             </div>
           ) : (
             <div className="space-y-3">

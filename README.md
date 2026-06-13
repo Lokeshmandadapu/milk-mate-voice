@@ -1,42 +1,33 @@
-# Welcome to your Lovable project
+# Milk Mate Voice
 
 ## Project info
 
-**URL**: https://lovable.dev/projects/9212c1f2-6ecf-493b-aa5f-0fde46a84955
+This is a local Milk Mate voice sales tracker built with React, TypeScript, Vite, and an Express backend.
 
 ## How can I edit this code?
 
-There are several ways of editing your application.
+You can work locally using your preferred IDE.
 
-**Use Lovable**
-
-Simply visit the [Lovable Project](https://lovable.dev/projects/9212c1f2-6ecf-493b-aa5f-0fde46a84955) and start prompting.
-
-Changes made via Lovable will be committed automatically to this repo.
-
-**Use your preferred IDE**
-
-If you want to work locally using your own IDE, you can clone this repo and push changes. Pushed changes will also be reflected in Lovable.
-
-The only requirement is having Node.js & npm installed - [install with nvm](https://github.com/nvm-sh/nvm#installing-and-updating)
+The only requirement is having Node.js and npm installed.
 
 Follow these steps:
 
 ```sh
-# Step 1: Clone the repository using the project's Git URL.
+# Step 1: Clone the repository.
 git clone <YOUR_GIT_URL>
 
 # Step 2: Navigate to the project directory.
 cd <YOUR_PROJECT_NAME>
 
-# Step 3: Install the necessary dependencies.
-npm i
+# Step 3: Install dependencies.
+npm install
 
-# Step 4: Start the development server with auto-reloading and an instant preview.
-npm run dev
+# Step 4: Start the development servers.
+npm run dev:all
 ```
 
-**Edit a file directly in GitHub**
+If you only want the frontend or backend separately, use `npm run dev` or `npm --prefix backend run dev`.
+
 
 - Navigate to the desired file(s).
 - Click the "Edit" button (pencil icon) at the top right of the file view.
@@ -59,6 +50,16 @@ This project is built with:
 - React
 - shadcn-ui
 - Tailwind CSS
+
+## Backend scaffold
+
+A new backend scaffold has been added in `backend/` using the recommended stack:
+
+- Node.js
+- Express.js
+- MySQL
+- JWT authentication
+- Placeholder API routes for Dashboard, Farmers, Milk Collection, Payments, Analytics, Reports, Notifications, AI Assistant, and Admin
 
 ## How can I deploy this project?
 

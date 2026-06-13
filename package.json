@@ -5,6 +5,8 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
+    "dev:backend": "npm --prefix backend run dev",
+    "dev:all": "npx concurrently \"npm run dev\" \"npm --prefix backend run dev\" --names \"frontend,backend\" --prefix-colors \"blue,green\"",
     "build": "vite build",
     "build:dev": "vite build --mode development",
     "lint": "eslint .",
@@ -60,6 +62,7 @@
     "tailwind-merge": "^2.6.0",
     "tailwindcss-animate": "^1.0.7",
     "vaul": "^0.9.9",
+    "xlsx": "^0.18.5",
     "zod": "^3.25.76"
   },
   "devDependencies": {
@@ -70,11 +73,11 @@
     "@types/react-dom": "^18.3.7",
     "@vitejs/plugin-react-swc": "^3.11.0",
     "autoprefixer": "^10.4.21",
+    "concurrently": "^10.0.3",
     "eslint": "^9.32.0",
     "eslint-plugin-react-hooks": "^5.2.0",
     "eslint-plugin-react-refresh": "^0.4.20",
     "globals": "^15.15.0",
-    "lovable-tagger": "^1.1.9",
     "postcss": "^8.5.6",
     "tailwindcss": "^3.4.17",
     "typescript": "^5.8.3",
